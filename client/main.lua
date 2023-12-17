@@ -1,4 +1,5 @@
-local onDuty = QBX?.PlayerData?.job?.onduty
+QBCore = exports['qb-core']:GetCoreObject()
+local onDuty = QBCore.Functions.GetPlayerData().job.onduty
 
 RegisterNetEvent('QBCore:Client:SetDuty', function(duty)
 	onDuty = duty
@@ -18,12 +19,12 @@ end
 
 local function craftPrep(recipe)
 	if not onDuty then
-		return exports.qbx_core:Notify(Lang:t('error.notOnDuty'), "error")
+		return QBCore.Functions.Notify(Lang:t('error.notOnDuty'), "error")
 	end
 
 	local HasIngredients = lib.callback.await('qbx-burgershot:server:hasIngredients', false, recipe, "prep")
 	if not HasIngredients then
-		return exports.qbx_core:Notify(Lang:t("error.missing_ingredients"), 'error', 7500)
+		return QBCore.Functions.Notify(Lang:t("error.missing_ingredients"), 'error', 7500)
 	end
 
 	if lib.progressBar({
@@ -49,18 +50,18 @@ local function craftPrep(recipe)
 	}) then
 		TriggerServerEvent('qbx-burgershot:server:CraftMeal', recipe, "prep")
 	else
-		exports.qbx_core:Notify(Lang:t('error.cancel'), 'error', 7500)
+		QBCore.Functions.Notify(Lang:t('error.cancel'), 'error', 7500)
 	end
 end
 
 local function craftDrink(recipe)
 	if not onDuty then
-		return exports.qbx_core:Notify(Lang:t('error.notOnDuty'), "error")
+		return QBCore.Functions.Notify(Lang:t('error.notOnDuty'), "error")
 	end
 
 	local HasIngredients = lib.callback.await('qbx-burgershot:server:hasIngredients', false, recipe, "drinks")
 	if not HasIngredients then
-		return exports.qbx_core:Notify(Lang:t("error.missing_ingredients"), 'error', 7500)
+		return QBCore.Functions.Notify(Lang:t("error.missing_ingredients"), 'error', 7500)
 	end
 
 	if lib.progressBar({
@@ -76,18 +77,18 @@ local function craftDrink(recipe)
 	}) then
 		TriggerServerEvent('qbx-burgershot:server:CraftMeal', recipe, "drinks")
 	else
-		exports.qbx_core:Notify(Lang:t('error.cancel'), 'error', 7500)
+		QBCore.Functions.Notify(Lang:t('error.cancel'), 'error', 7500)
 	end
 end
 
 local function craftMeal(recipe)
 	if not onDuty then
-		return exports.qbx_core:Notify(Lang:t('error.notOnDuty'), "error")
+		return QBCore.Functions.Notify(Lang:t('error.notOnDuty'), "error")
 	end
 
 	local HasIngredients = lib.callback.await('qbx-burgershot:server:hasIngredients', false, recipe, 'burgers')
 	if not HasIngredients then
-		return exports.qbx_core:Notify(Lang:t("error.missing_ingredients"), 'error', 7500)
+		return QBCore.Functions.Notify(Lang:t("error.missing_ingredients"), 'error', 7500)
 	end
 
 
@@ -108,7 +109,7 @@ local function craftMeal(recipe)
 	}) then
 		TriggerServerEvent('qbx-burgershot:server:CraftMeal', recipe, 'burgers')
 	else
-		exports.qbx_core:Notify(Lang:t('error.cancel'), 'error', 7500)
+		QBCore.Functions.Notify(Lang:t('error.cancel'), 'error', 7500)
 	end
 end
 
